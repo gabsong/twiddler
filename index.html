@@ -1,27 +1,76 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="jquery.js"></script>
-    <script src="data_generator.js"></script>
-  </head>
-  <body>
-    <script>
 
-      $(document).ready(function(){
-        var $body = $('body');
-        $body.html('');
+<head>
+  <link rel="stylesheet" type="text/css" href="styles/main.css" />
+  <script src="jquery.js"></script>
+  <script src="data_generator.js"></script>
+</head>
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
-        }
+<body>
+  <div id="root">
+    <div class="flex-container">
+      <div id="left-column">
+        <!-- Add left side stuff here -->
+        LEFT
+      </div>
+      <div id="center-column">
+        <div class="home-area">
+          <div id="stream">
+            <!-- main twiddler timeline -->
+            STREAM
+          </div>
+        </div>
+      </div>
+      <div id="right-column">
+        <!-- Add right side stuff here -->
+        RIGHT
+      </div>
+    </div>
+  </div>
+  <script>
+    // http://gregfranko.com/jquery-best-practices/
+    // IIFE - Immediately Invoked Function Expression
+    (function($, window, document) {
+      $(function() {});
 
-      });
+      // The rest of the code goes here!
+      const $body = $('body');
+      const $stream = $('#stream');
+      // $body.html(''); // clears all html inside the body tag
 
-    </script>
-  </body>
+      // create tweet function
+      const buildTweet = (user, message, ts) => {
+        let $tweet = $('<div></div>').addClass('tweet');
+        const $user = $('<p></p>').addClass('handle').text('@' + user);
+        const $message = $('<p></p>').text(message);
+        const $ts = $('<p></p>').addClass('timestamp').text(ts);
+        $user.appendTo($tweet);
+        $message.appendTo($tweet);
+        $ts.appendTo($tweet);
+        return $tweet;
+      };
+
+      // loads initial set of tweets
+      let index = streams.home.length - 1;
+      while (index >= 0) {
+        const tweet = streams.home[index];
+        buildTweet(tweet.user, tweet.message, tweet.created_at).appendTo(stream);
+        index -= 1;
+      }
+
+      // load new tweets and append to top
+
+
+      // add event listener to username clicks
+
+
+      // change to user stream
+
+
+    }(window.jQuery, window, document));
+
+  </script>
+</body>
+
 </html>

@@ -1,0 +1,30 @@
+.flex-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  height: 100%;
+  background-color: orange;
+}
+
+#center-column {
+  width: 600px;
+  background-color: aquamarine;
+  margin: 0 10 0 10;
+}
+
+#left-column, #right-column {
+  background-color: blueviolet;
+}
+
+.tweet {
+  border: 0.5px solid black;
+  padding: 10px;
+}
+
+.handle {
+  font-weight: bold;
+}
+
+.timestamp {
+  font-size: 0.5em;
+}
