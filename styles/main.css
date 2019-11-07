@@ -1,19 +1,29 @@
+@import "normalize.css";
+
 .flex-container {
   display: flex;
   justify-content: center;
   flex-direction: row;
   height: 100%;
-  background-color: orange;
+  background-color: lightgrey;
 }
 
 #center-column {
-  width: 600px;
-  background-color: aquamarine;
+  width: 400px;
+  background-color: blueviolet;
   margin: 0 10 0 10;
 }
 
 #left-column, #right-column {
-  background-color: blueviolet;
+  display: inline-block;
+  background-color: white;
+}
+
+#stream {
+  background-color: aquamarine;
+}
+.navigation, .recommendations {
+  background-color: lightskyblue;
 }
 
 .tweet {
