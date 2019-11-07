@@ -65,7 +65,11 @@
 
   // try loading tweets on click
   $('#get-tweets').click( () => {
-    console.log("test event");
+    const start = lastTweet.home;
+    const length = streams.home.length;
+    console.log(`Adding ${length - start} tweets starting from #${start}`);
+    $stream.prepend(getTweet(start, streams.home.length));
+    console.log(`Current tweet count is ${streams.home.length}`);
   });
 
   // show tweets by user
@@ -78,8 +82,8 @@
 
 
   // test new functions
-  console.log(getTweet(0,5));
-  console.log(getTweet(5,10, 'mracus'));
-  console.log(lastTweet);
+  // console.log(getTweet(0,5));
+  // console.log(getTweet(5,10, 'mracus'));
+  // console.log(lastTweet);
 
 });
