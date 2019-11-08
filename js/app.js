@@ -14,15 +14,11 @@
   const $body = $('body');
   const $stream = $('#stream');
 
-  // create tweet as HTML
+  // create tweet as htmlString
   const buildTweetTxt = (user, message, ts) => {
     return `<div class="tweet">
         <div>
-          <a href="./users/${user}.html">
-            <span class="handle">
-              @${user}
-            </span>
-          </a>
+          <span class="${user} handle">@${user}</span>
         </div>
         <div>
           <p class="message">${message}</p>
@@ -31,19 +27,7 @@
       </div>`.trim();
   };
 
-  // create tweet as DOM object
-  // const buildTweetObj = (user, message, ts) => {
-  //   let $tweet = $('<div></div>').addClass('tweet');
-  //   const $user = $('<p></p>').addClass('handle').text('@' + user);
-  //   const $message = $('<p></p>').text(message);
-  //   const $ts = $('<p></p>').addClass('timestamp').text(ts);
-  //   $user.appendTo($tweet);
-  //   $message.appendTo($tweet);
-  //   $ts.appendTo($tweet);
-  //   return $tweet;
-  // };
-
-  // loads initial set of tweets (total: 11)
+  // load first tweets (total: 11)
   let index = streams.home.length - 1;
   let lastTweet = {
     home: streams.home.length
@@ -54,6 +38,7 @@
     index -= 1;
   }
 
+  // get tweets from local storage (on the browser's global scope)
   const getTweet = (start, end, handle) => {
     let tweets = '';
     let collection = [];
@@ -71,7 +56,7 @@
     return tweets;
   };
 
-  // try loading tweets on click
+  // load more tweets when #get-tweets button is clicked
   $('#get-tweets').click( () => {
     const start = lastTweet.home;
     const length = streams.home.length;
@@ -80,14 +65,10 @@
     console.log(`Current tweet count is ${streams.home.length}`);
   });
 
-  // show tweets by user
-
-
-  // update home-area to have username and back button
-
-
   // show user stream when username is clicked
-
+  $('.handle').click( () => {
+    $stream.children().hide('slow');
+  });
 
   // test new functions
   // console.log(getTweet(0,5));
