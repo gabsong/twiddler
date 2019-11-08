@@ -17,9 +17,17 @@
   // create tweet as HTML
   const buildTweetTxt = (user, message, ts) => {
     return `<div class="tweet">
-      <p class="handle">@${user}</p>
-      <p class="message">${message}</p>
-      <p class="timestamp">${ts}</p>
+        <div>
+          <a href="./users/${user}.html">
+            <span class="handle">
+              @${user}
+            </span>
+          </a>
+        </div>
+        <div>
+          <p class="message">${message}</p>
+          <p class="timestamp">${ts}</p>
+        </div>
       </div>`.trim();
   };
 
