@@ -13,66 +13,129 @@
   // The rest of your code goes here!
   const $body = $('body');
   const $stream = $('#stream');
+  const $currentUser = $('#page-title > a');
 
-  // create tweet as htmlString
-  const buildTweetTxt = (user, message, ts) => {
-    return `<div class="tweet">
-        <div>
-          <span class="${user} handle">@${user}</span>
-        </div>
-        <div>
-          <p class="message">${message}</p>
-          <p class="timestamp">${ts}</p>
+  // Create tweet as htmlString (helper function)
+  const buildTweet = (username, message, ts) => {
+    return `<div class="tweet-wrapper center">
+        <div class="tweet">
+          <div>
+            <span class="${username} handle">@${username}</span>
+          </div>
+          <div>
+            <p class="message">${message}</p>
+            <p class="timestamp">${ts}</p>
+          </div>
         </div>
       </div>`.trim();
   };
 
-  // load first tweets (total: 11)
-  let index = streams.home.length - 1;
+  // Load first tweets (total: 11)
   let lastTweet = {
     home: streams.home.length
   };
+
+  let index = streams.home.length - 1;
   while (index >= 0) {
     const tweet = streams.home[index];
-    $stream.append(buildTweetTxt(tweet.user, tweet.message, tweet.created_at));
+    $stream.append(buildTweet(tweet.user, tweet.message, tweet.created_at));
     index -= 1;
   }
 
-  // get tweets from local storage (on the browser's global scope)
-  const getTweet = (start, end, handle) => {
+  // Get tweets from local storage (helper function)
+  const getTweets = (start, end, username) => {
     let tweets = '';
     let collection = [];
-    if (handle === undefined) {
-      handle = 'home';
+
+    // can use function for home and user streams
+    if (username === 'home') {
       collection = streams.home;
     } else {
-      collection = streams.users[handle];
+      collection = streams.users[username];
     }
 
-    (collection).slice(start, end).forEach(tweet => {
-      tweets = buildTweetTxt(tweet.user, tweet.message, tweet.created_at) + tweets;
+    // build as string so we only call prepend once
+    (collection).slice(start, end).forEach((tweet) => {
+      tweets = buildTweet(tweet.user, tweet.message, tweet.created_at) + tweets;
     });
-    lastTweet[handle] = end; // side effect
+
+    // update count object and test in the console
+    lastTweet[username] = end; // side effect
+    console.log(`The ${$currentUser.attr('name')} timeline has ${lastTweet[username]} tweets`);
+
+    // return htmlString of non-initialized DOM objects
     return tweets;
   };
 
-  // load more tweets when #get-tweets button is clicked
-  $('#get-tweets').click( () => {
-    const start = lastTweet.home;
-    const length = streams.home.length;
-    console.log(`Adding ${length - start} tweets starting from #${start}`);
-    $stream.prepend(getTweet(start, streams.home.length));
-    console.log(`Current tweet count is ${streams.home.length}`);
+  // Load new tweets on click [See new tweets]
+  $('#load-tweets').on('click', (event) => {
+    let username = $currentUser.attr('name');
+    let start = 0;
+    let length = 0;
+
+    if (username === 'home') {
+      start = lastTweet.home;
+      length = streams.home.length;
+    } else {
+      start = lastTweet[username];
+      length = streams.users[username].length;
+    }
+
+    console.log(`+${length - start} tweets starting at #${start}`);
+    $stream.prepend(getTweets(start, length, username));
   });
 
-  // show user stream when username is clicked
-  $('.handle').click( () => {
-    $stream.children().hide('slow');
+  // Show user tweets on click <@username>
+  $stream.on('click', '.handle', (event) => {
+    const username = $(event.target).text().substring(1);
+
+    if ($currentUser.attr('name') !== username) {
+      $stream.children().remove();
+      $currentUser.text(username);
+      $currentUser.attr('name', username);
+    }
+
+    $stream.prepend(getTweets(lastTweet[username] || 0, streams.users[username].length, username));
   });
 
-  // test new functions
-  // console.log(getTweet(0,5));
-  // console.log(getTweet(5,10, 'mracus'));
-  // console.log(lastTweet);
+  // Show "home" tweets on click [Home]
+  $('#nav-home').on('click', (event) => {
+    if ($currentUser.attr('name') !== 'home') {
+      $stream.children().remove();
+      console.log(`All ${$currentUser.attr('name')} tweets removed from the DOM`);
+      $currentUser.text('Home');
+      $currentUser.attr('name', 'home');
+      $stream.prepend(getTweets(0, streams.home.length, 'home'));
+    }
+  });
 
+  // Fix position of Tweet button
+
+
+  // See if code can be simplified
+
+
+  // Some helpful functions
+  $('#flash-message').hide();
+  // $('#postTweet').on('click', () => {
+  //   $('#flashMessage')
+  //     .slideDown(1000)
+  //     .delay(3000)
+  //     .slideUp();
+  // });
+
+  // progressive enhancement: site functional even without JS
+  // Event Propagation: when an event moves through the DOM from child to a
+  // parent element, that's called Event Propagation, because the event
+  // propagates, or moves through the DOM.
+
+  // .eq method to select an array element
+  // .css method can be used to change color: .css({ color: 'green' })
+  // .prev method returns the previous sibling element (also, there is "next")
+  // $('li:hidden').show() to show hidden list elements
+  // $someVar.attr('target', '_blank') adds an attribute of target="_blank"
+  // or attr('download', true) -- notice true has no quotes
+  // css :after (you can add a css element with this)
+  // custom selector: $('img[src$=".png"]') where ^ is starts with, $ is end
+  // preventDefault() <- check uses
 });

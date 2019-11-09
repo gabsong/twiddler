@@ -3,42 +3,65 @@
 
 <head>
   <title>Home</title>
-  <link rel="stylesheet" href="styles/main.css" type="text/css"/>
+  <link rel="stylesheet" href="styles/main.css" type="text/css" />
 </head>
 
 <body>
   <div class="grid" id="root">
     <div class="flex-container">
-      <div id="left-column">
-        <div class="navigation">
+      <div class="left-column">
+        <div id="navigation">
           <!-- Add left side stuff here -->
-          LEFT SIDEBAR
-        </div>
-      </div>
-      <div id="center-column">
-        <div class="home-area">
-          <!-- new tweet functionality -->
-          PAGE TITLE: HOME
-          <div>
-            <button class="btn" id="get-tweets" type="button" name="Update Home Timeline">
-              Get More Tweets
+          <div id="logo">
+            <img src="images/twiddler-logo-250.png" alt="Inverted Twitter Logo">
+          </div>
+          <div class="btn-wrapper">
+            <button class="btn btn-inverse" id="nav-home" type="button">Home</button>
+          </div>
+          <div class="btn-wrapper">
+            <button class="btn btn-inverse" id="load-tweets" type="button">
+              See new
             </button>
           </div>
-          <div id="stream">
-            <!-- main twiddler timeline -->
-          </div>
         </div>
       </div>
-      <div id="right-column">
-        <div class="recommendations">
+      <div class="center center-column">
+        <div id="home-area">
+          <!-- new tweet functionality -->
+          <div id="page-header">
+            <div id="page-title">
+              <a name="home">Home</a>
+            </div>
+          </div>
+          <div id="compose-module">
+            <form>
+              <div id="composer">
+                <textarea type="text" id="tweet-text" maxlength="280" rows="4" name="Message" placeholder="What's happening?"></textarea>
+                <div id="composer-submit">
+                  <div id="reserved">
+                    <div id="flash-message">Tweet successful!</div>
+                  </div>
+                  <div class="btn-wrapper">
+                    <button class="btn" id="post-tweet" type="button">Tweet</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div id="separator"></div>
+        </div>
+        <div id="stream">
+        </div>
+      </div>
+      <div class="right-column">
+        <div id="recommendations">
           <!-- Add right side stuff here -->
-          RIGHT SIDEBAR
         </div>
       </div>
     </div>
   </div>
 
-  <script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/jquery-3.4.1.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/data_generator.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
 </body>
