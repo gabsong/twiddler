@@ -14,6 +14,7 @@
   const $body = $('body');
   const $stream = $('#stream');
   const $currentUser = $('#page-title > a');
+  let visitor = 'gabsong';
 
   // Create tweet as htmlString (helper function)
   const buildTweet = (username, message, ts) => {
@@ -109,6 +110,12 @@
     }
   });
 
+  // let visitor compose and post a new tweet
+  // $('#post-tweet').on('submit', (event) => {
+  //   console.log('tweet POST request');
+  //   writeTweet($('#tweet-text').val());
+  // });
+
   // Fix position of Tweet button
 
 
@@ -116,7 +123,6 @@
 
 
   // Some helpful functions
-  $('#flash-message').hide();
   // $('#postTweet').on('click', () => {
   //   $('#flashMessage')
   //     .slideDown(1000)
