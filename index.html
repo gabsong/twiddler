@@ -33,16 +33,17 @@
               <a name="home">Home</a>
             </div>
           </div>
-          <div id="compose-module">
-            <form>
-              <div id="composer">
-                <textarea type="text" id="tweet-text" maxlength="280" rows="4" name="Message" placeholder="What's happening?"></textarea>
+          <div id="composer-module">
+            <form id="tweet-composer-form">
+              <div class="composer-wrapper">
+                <textarea type="text" id="composer" maxlength="280" rows="4" name="Message"
+                  placeholder="What's happening?"></textarea>
                 <div id="composer-submit">
                   <div class="reserved">
                     <div id="flash-message">Tweet successful!</div>
                   </div>
                   <div class="btn-wrapper">
-                    <button class="btn" id="post-tweet">Tweet</button>
+                    <button class="btn" id="post-message" type="button">Tweet</button>
                   </div>
                 </div>
               </div>
