@@ -1,3 +1,7 @@
+window.addEventListener('DOMContentLoaded', (event) => {
+  console.log('DOM fully loaded and parsed');
+});
+
 // http://gregfranko.com/jquery-best-practices/
 // IIFE - Immediately Invoked Function Expression
 ( (yourcode) => {
@@ -8,13 +12,12 @@
 }) ( ($, window, document) => {
 
   // The $ is now locally scoped
-  $( () => { /* The DOM is ready! */ } );
+  $( () => { console.log('The DOM is ready!'); } );
 
   // The rest of your code goes here!
   const $body = $('body');
   const $stream = $('#stream');
   const $currentUser = $('#page-title > a');
-  let visitor = 'gabsong';
 
   // Create tweet as htmlString (helper function)
   const buildTweet = (username, message, ts) => {
@@ -91,6 +94,7 @@
     const username = $(event.target).text().substring(1);
 
     if ($currentUser.attr('name') !== username) {
+      $('#composer-module').hide();
       $stream.children().remove();
       $currentUser.text(username);
       $currentUser.attr('name', username);
@@ -107,41 +111,29 @@
       $currentUser.text('Home');
       $currentUser.attr('name', 'home');
       $stream.prepend(getTweets(0, streams.home.length, 'home'));
+      $('#composer-module').show();
     }
   });
 
   // let visitor compose and post a new tweet
-  // $('#post-tweet').on('submit', (event) => {
-  //   console.log('tweet POST request');
-  //   writeTweet($('#tweet-text').val());
-  // });
+  $('#post-message').on('click', (event) => {
+    const message = $('#composer').val();
 
-  // Fix position of Tweet button
+    // Only tweet real messages
+    if (message.length > 0) {
+      writeTweet(message);
+      $('#flash-message').slideDown(100).delay(1500).slideUp(100);
+      $('#composer').val('');
 
+      // Show new tweet in the feed
+      const start = lastTweet.home;
+      const length = streams.home.length;
+      console.log(`+${length - start} tweets starting at #${start}`);
+      $stream.prepend(getTweets(start, length, 'home'));
+    }
+  });
 
-  // See if code can be simplified
-
-
-  // Some helpful functions
-  // $('#postTweet').on('click', () => {
-  //   $('#flashMessage')
-  //     .slideDown(1000)
-  //     .delay(3000)
-  //     .slideUp();
-  // });
-
-  // progressive enhancement: site functional even without JS
-  // Event Propagation: when an event moves through the DOM from child to a
-  // parent element, that's called Event Propagation, because the event
-  // propagates, or moves through the DOM.
-
-  // .eq method to select an array element
-  // .css method can be used to change color: .css({ color: 'green' })
-  // .prev method returns the previous sibling element (also, there is "next")
-  // $('li:hidden').show() to show hidden list elements
-  // $someVar.attr('target', '_blank') adds an attribute of target="_blank"
-  // or attr('download', true) -- notice true has no quotes
-  // css :after (you can add a css element with this)
-  // custom selector: $('img[src$=".png"]') where ^ is starts with, $ is end
-  // preventDefault() <- check uses
+  console.log("end of $('document')ready function()");
 });
+
+console.log('end of app.js');
