@@ -16,6 +16,9 @@ window.users = Object.keys(streams.users);
 // utility function for adding tweets to our data structures
 var addTweet = function(newTweet){
   var username = newTweet.user;
+  if (streams.users[username] === undefined) {
+    streams.users[username] = [];
+  }
   streams.users[username].push(newTweet);
   streams.home.push(newTweet);
 };
@@ -58,6 +61,7 @@ scheduleNextTweet();
 
 // utility function for letting students add "write a tweet" functionality
 // (note: not used by the rest of this file.)
+let visitor = 'gabsong';
 var writeTweet = function(message){
   if(!visitor){
     throw new Error('set the global visitor property!');
@@ -65,5 +69,8 @@ var writeTweet = function(message){
   var tweet = {};
   tweet.user = visitor;
   tweet.message = message;
+  tweet.created_at = new Date();
   addTweet(tweet);
 };
+
+console.log('end of data_generator.js');
